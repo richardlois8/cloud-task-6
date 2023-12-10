@@ -1,0 +1,13 @@
+#!/bin/bash
+sudo yum update -y
+sudo yum -y install docker
+sudo usermod -a -G docker ec2-user
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo mkdir wp
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-00e6150af352615c9.efs.us-east-1.amazonaws.com:/ ~/wp/
+
+
+# Mount EFS
+# RUN rm -r /var/www/html/ \
+#     && sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-07122350303e7f0dd.efs.us-east-1.amazonaws.com:/ /var/www/html/
