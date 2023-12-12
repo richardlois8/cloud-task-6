@@ -7,12 +7,13 @@ sudo systemctl enable docker
 sudo mkdir wp
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-09851c6aea7c595c8.efs.us-east-1.amazonaws.com:/ /wp/
 chmod -R 755 /wp
+docker run -d -p 80:80 --name webserver \
+-v /wp://var/www/localhost/htdocs \
+richardlois8/apache-wp
 
 sudo wget https://github.com/richardlois8/cloud-task-6/archive/refs/heads/main.zip
 sudo unzip main.zip
 cd /cloud-task-6-main
-docker build -t webserver:1.0 .
-docker run -d -p 80:80 --name webserver \
--v /wp:/usr/share/nginx/html \
--v /cloud-task-6-main/default.conf:/etc/nginx/conf.d/default.conf \
-webserver:1.0
+
+mysql -h db.chthxegbwtr6.us-east-1.rds.amazonaws.com -u root -p
+UPDATE wp_options SET option_value ="http://52.90.86.77" WHERE option_name="siteurl";
